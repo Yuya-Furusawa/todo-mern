@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
+import tw from 'twin.macro';
 
 import { TodoType } from '../types';
 
@@ -28,14 +30,13 @@ export const EditTodo = ({ todo }: EditType) => {
 
   return (
     <>
-      <button
+      <EditButton
         type="button"
-        className="btn btn-warning"
         data-toggle="modal"
         data-target={`#id${todo.id}`}
       >
         Edit
-      </button>
+      </EditButton>
 
       <div
         className="modal container"
@@ -64,22 +65,20 @@ export const EditTodo = ({ todo }: EditType) => {
               />
             </div>
             <div className="modal-footer">
-              <button
+              <EditButton
                 type="button"
-                className="btn btn-warning"
                 data-dismiss="modal"
                 onClick={e => updateDescription(e)}
               >
                 Edit
-              </button>
-              <button
+              </EditButton>
+              <DeleteButton
                 type="button"
-                className="btn btn-danger"
                 data-dismiss="modal"
                 onClick={() => setDescription(todo.description)}
               >
                 Close
-              </button>
+              </DeleteButton>
             </div>
           </div>
         </div>
@@ -87,3 +86,33 @@ export const EditTodo = ({ todo }: EditType) => {
     </>
   );
 };
+
+const EditButton = styled.button`
+  ${tw`
+    w-auto
+    pl-3
+    pr-3
+    pt-1.5
+    pb-1.5
+    rounded-sm
+    text-base
+    text-gray-500
+    font-semibold
+    bg-yellow-300
+  `}
+`;
+
+const DeleteButton = styled.button`
+  ${tw`
+    w-auto
+    pl-3
+    pr-3
+    pt-1.5
+    pb-1.5
+    rounded-sm
+    text-base
+    text-white
+    font-semibold
+    bg-red-500
+  `}
+`;

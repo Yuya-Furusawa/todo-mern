@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import tw from 'twin.macro';
 
 import { DeleteTodo } from './DeleteTodo';
 import { TodoType } from '../types';
@@ -22,7 +24,7 @@ export const ListTodo = () => {
   }, []);
 
   return (
-    <table className="table mt-5 text-center">
+    <ListTable>
       <thead>
         <tr>
           <th>Description</th>
@@ -43,6 +45,26 @@ export const ListTodo = () => {
           </tr>
         ))}
       </tbody>
-    </table>
+    </ListTable>
   );
 };
+
+const ListTable = styled.table`
+  ${tw`
+    mt-12
+    table
+    text-center
+    w-full
+    mb-5
+  `}
+
+  td, th {
+    ${tw`
+      p-3
+      border-t
+      border-solid
+      border-gray-300
+    `}
+  }
+
+`;

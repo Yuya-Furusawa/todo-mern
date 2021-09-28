@@ -1,4 +1,6 @@
 import React from 'react';
+import styled from 'styled-components';
+import tw from 'twin.macro';
 
 interface DeleteProps {
   id: string
@@ -17,8 +19,23 @@ export const DeleteTodo = ({ id }: DeleteProps) => {
   };
 
   return (
-    <button className="btn btn-danger" onClick={() => deleteTodo(id)}>
+    <DeleteButton onClick={() => deleteTodo(id)}>
       Delete
-    </button>
+    </DeleteButton>
   );
 };
+
+const DeleteButton = styled.button`
+  ${tw`
+    w-auto
+    pl-2
+    pr-2
+    pt-1.5
+    pb-1.5
+    rounded-sm
+    text-base
+    text-white
+    font-semibold
+    bg-red-500
+  `}
+`;
