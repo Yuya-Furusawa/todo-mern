@@ -1,8 +1,8 @@
+import express from 'express';
+import cors from 'cors';
 import { Express, Request, Response } from 'express';
-import { QueryError, RowDataPacket } from 'mysql2';
-const express = require('express');
-const cors = require('cors');
-const pool = require('./db');
+import { RowDataPacket } from 'mysql2';
+import { pool } from './db';
 
 const app: Express = express();
 
@@ -16,81 +16,71 @@ app.use(express.json()); //req.body
 
 //create a todo
 app.post("/todos", async (req: Request, res: Response) => {
-  const { description } = req.body;
-  await pool.promise().query(
-    'INSERT INTO todo (description) VALUES (?)',
-    [description]
-  )
-  .then((rows: RowDataPacket[]) => {
-    console.log(rows);
-    res.json(rows[0]);
-  })
-  .catch((error: QueryError) => {
+  try {
+    const { description } = req.body;
+    const resp = await pool.promise().query<RowDataPacket[]>(
+      'INSERT INTO todo (description) VALUES (?)',
+      [description]
+    );
+    res.json(resp[0]);
+  } catch (error) {
     throw error;
-  });
+  }
 });
 
 //get all todos
 app.get("/todos", async (req: Request, res: Response) => {
-  await pool.promise().query(
-    'SELECT * FROM todo'
-  )
-  .then((rows: RowDataPacket[]) => {
-    console.log(rows[0]);
-    res.json(rows[0]);
-  })
-  .catch((error: QueryError) => {
+  try{
+    const resp = await pool.promise().query<RowDataPacket[]>(
+      'SELECT * FROM todo'
+    );
+    res.json(resp[0]);
+  } catch (error) {
     throw error;
-  })
+  }
 });
 
 //get a todo
 app.get("/todos/:id", async (req: Request, res: Response) => {
-  const { id } = req.params;
-  await pool.promise().query(
-    'SELECT * FROM todo WHERE id = (?)',
-    [id]
-  )
-  .then((rows: RowDataPacket[]) => {
-    console.log(rows);
-    res.json(rows[0]);
-  })
-  .catch((error: QueryError) => {
+  try {
+    const { id } = req.params;
+    const resp = await pool.promise().query<RowDataPacket[]>(
+      'SELECT * FROM todo WHERE id = (?)',
+      [id]
+    );
+    res.json(resp[0]);
+  } catch (error) {
     throw error;
-  })
+  }
 });
 
 //update a todo
 app.put("/todos/:id", async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { description } = req.body;
-  await pool.promise().query(
-    'UPDATE todo SET description = (?) WHERE id = (?)',
-    [description, id]
-  )
-  .then((rows: RowDataPacket[]) => {
-    console.log(rows);
-    res.json(rows[0]);
-  })
-  .catch((error: QueryError) => {
+  try {
+    const { id } = req.params;
+    const { description } = req.body;
+    const resp = await pool.promise().query<RowDataPacket[]>(
+      'UPDATE todo SET description = (?) WHERE id = (?)',
+      [description, id]
+    );
+    res.json(resp[0]);
+  } catch (error) {
     throw error;
-  });
+  }
 });
 
 //delete a todo
 app.delete("/todos/:id", async (req: Request, res: Response) => {
-  const { id } = req.params;
-  await pool.promise().query(
-    'DELETE FROM todo WHERE id = (?)',
-    [id]
-  )
-  .then((rows: RowDataPacket[]) => {
-    console.log(rows);
-    res.json(rows[0]);
-  })
-  .catch((error: QueryError) => {
+  try {
+    const { id } = req.params;
+    const resp = await pool.promise().query<RowDataPacket[]>(
+      'DELETE FROM todo WHERE id = (?)',
+      [id]
+    );
+    res.json(resp[0]);
+  } catch (error) {
     throw error;
-  })
+  }
 });
 
 
