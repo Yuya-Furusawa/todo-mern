@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 
+import { APIContext } from '../context';
 import { TodoType } from '../types';
 
 type EditType = {
@@ -10,12 +11,13 @@ type EditType = {
 
 export const EditTodo = ({ todo }: EditType) => {
   const [description, setDescription] = useState<string>("");
+  const API_URL = useContext(APIContext);
 
   const updateDescription = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const body = { description: description };
-      await fetch(`http://localhost:5000/todos/${todo.id}`, {
+      await fetch(`${API_URL}/todos/${todo.id}`, {
         method: "PUT",
         headers: {
           'Content-Type': 'application/json'

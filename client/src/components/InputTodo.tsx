@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 
+import { APIContext } from '../context';
+
 export const InputTodo = () => {
   const [description, setDescription] = useState<string>("");
+  const API_URL = useContext(APIContext);
 
   const onSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const body = { description: description };
-      await fetch('http://localhost:5000/todos', {
+      await fetch(`${API_URL}/todos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)

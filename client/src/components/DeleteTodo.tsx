@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
+
+import { APIContext } from '../context';
 
 interface DeleteProps {
   id: string
 }
 
 export const DeleteTodo = ({ id }: DeleteProps) => {
+  const API_URL = useContext(APIContext);
+
   const deleteTodo = async (id: string) => {
     try {
-      await fetch(`http://localhost:5000/todos/${id}`, {
+      await fetch(`${API_URL}/todos/${id}`, {
         method: "DELETE"
       });
       window.location.reload();

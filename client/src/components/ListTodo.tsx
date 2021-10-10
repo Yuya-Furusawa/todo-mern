@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 
+import { APIContext } from '../context';
 import { DeleteTodo } from './DeleteTodo';
 import { TodoType } from '../types';
 import { EditTodo } from './EditTodo';
 
 export const ListTodo = () => {
   const [todos, setTodos] = useState([]);
+  const API_URL = useContext(APIContext);
 
   const getTodos = async () => {
     try {
-      const response = await fetch('http://localhost:5000/todos');
+      const response = await fetch(`${API_URL}/todos`);
       const jsondata = await response.json();
       setTodos(jsondata);
     } catch (err) {
