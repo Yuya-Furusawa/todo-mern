@@ -1,0 +1,7 @@
+CREATE DATABASE todomern;
+USE todomern;
+DROP TABLE IF EXISTS todo;
+CREATE TABLE todo (
+  id SERIAL PRIMARY KEY,
+  description VARCHAR(255)
+);
